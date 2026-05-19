@@ -1,0 +1,488 @@
+/* ============================================================
+   styles.css
+   FIT2179 Data Visualisation 2 — Messi's World Cup 2022
+   ============================================================ */
+
+
+/* ------------------------------------------------------------
+   1. DESIGN TOKENS
+------------------------------------------------------------ */
+:root {
+  /* Colours */
+  --bg:          #0d1117;
+  --bg-section:  #111318;
+  --bg-card:     #161b22;
+  --border:      #21262d;
+  --accent:      #58a6ff;       /* Argentina sky blue */
+  --accent2:     #d4a017;       /* gold / trophy */
+  --green:       #3fb950;
+  --red:         #f85149;
+  --white:       #f0f6fc;
+  --text:        #c9d1d9;
+  --text-muted:  #8b949e;
+  --text-dim:    #6e7681;
+
+  /* Typography */
+  --font-display: 'Bebas Neue', sans-serif;
+  --font-body:    'DM Sans', sans-serif;
+  --font-mono:    'DM Mono', monospace;
+
+  /* Spacing */
+  --page-pad: 5vw;
+  --gap:      24px;
+  --radius:   8px;
+}
+
+
+/* ------------------------------------------------------------
+   2. RESET & BASE
+------------------------------------------------------------ */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+}
+a:hover { text-decoration: underline; }
+
+strong { color: var(--white); }
+
+
+/* ------------------------------------------------------------
+   3. HERO
+   Full-width banner with diagonal stripe texture
+------------------------------------------------------------ */
+.hero {
+  background:
+    repeating-linear-gradient(
+      -52deg,
+      transparent,
+      transparent 40px,
+      rgba(88, 166, 255, 0.04) 40px,
+      rgba(88, 166, 255, 0.04) 80px
+    ),
+    linear-gradient(160deg, #0d1117 60%, #111d2c 100%);
+  border-bottom: 1px solid var(--border);
+  padding: 72px var(--page-pad) 64px;
+}
+
+.hero-inner {
+  max-width: 680px;
+}
+
+/* Small label above the title */
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 14px;
+  display: block;
+}
+
+.hero-title {
+  font-family: var(--font-display);
+  font-size: clamp(52px, 10vw, 120px);
+  line-height: 0.92;
+  color: var(--white);
+  margin-bottom: 8px;
+  letter-spacing: 0.01em;
+}
+
+/* "Argentina" in accent blue */
+.hero-title span { color: var(--accent); display: block; }
+
+.hero-sub {
+  font-family: var(--font-display);
+  font-size: clamp(18px, 3.5vw, 40px);
+  color: var(--accent2);
+  letter-spacing: 0.04em;
+  margin-bottom: 20px;
+}
+
+.hero-lead {
+  font-size: 15px;
+  font-weight: 300;
+  color: var(--text-muted);
+  line-height: 1.8;
+  margin-bottom: 36px;
+}
+
+/* The four big numbers in the hero */
+.hero-stats {
+  display: flex;
+  gap: 36px;
+  flex-wrap: wrap;
+  padding-top: 8px;
+  border-top: 1px solid var(--border);
+}
+
+.hero-stat {
+  display: flex;
+  flex-direction: column;
+}
+
+.stat-num {
+  font-family: var(--font-display);
+  font-size: 44px;
+  color: var(--accent);
+  line-height: 1;
+}
+
+.stat-num sup {
+  font-size: 22px;
+  vertical-align: super;
+}
+
+.stat-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-top: 4px;
+}
+
+
+/* ------------------------------------------------------------
+   4. SECTIONS
+   Two section styles: default (slightly lighter) and dark
+------------------------------------------------------------ */
+.section {
+  padding: 56px var(--page-pad);
+  border-bottom: 1px solid var(--border);
+  background: var(--bg);
+}
+
+/* Alternating darker section background */
+.section-dark {
+  background: var(--bg-section);
+}
+
+/* Small ALL-CAPS label above section title */
+.section-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 6px;
+}
+
+.section-title {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 4.5vw, 56px);
+  color: var(--white);
+  line-height: 1;
+  letter-spacing: 0.02em;
+  margin-bottom: 14px;
+}
+
+/* Intro paragraph below the section title — max width for readability */
+.section-intro {
+  max-width: 740px;
+  font-size: 14px;
+  font-weight: 300;
+  color: var(--text-muted);
+  line-height: 1.8;
+  margin-bottom: 32px;
+}
+
+/* Subsection heading inside prose columns */
+.subsection-title {
+  font-family: var(--font-display);
+  font-size: 22px;
+  color: var(--white);
+  letter-spacing: 0.03em;
+  margin-bottom: 12px;
+}
+
+
+/* ------------------------------------------------------------
+   5. GRID LAYOUTS
+------------------------------------------------------------ */
+.two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--gap);
+  align-items: start;
+}
+
+.three-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: var(--gap);
+}
+
+/* Chart + text side by side rows (Section 2) */
+.chart-text-row {
+  margin-bottom: 0;
+}
+
+/* Full-width chart container */
+.chart-full {
+  margin-bottom: 8px;
+}
+
+
+/* ------------------------------------------------------------
+   6. CARDS
+   White-bordered containers for each chart
+------------------------------------------------------------ */
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px 20px 16px;
+  transition: border-color 0.2s;
+}
+
+.card:hover {
+  border-color: rgba(88, 166, 255, 0.35);
+}
+
+.card-title {
+  font-family: var(--font-display);
+  font-size: 17px;
+  color: var(--white);
+  letter-spacing: 0.04em;
+  margin-bottom: 4px;
+}
+
+.card-desc {
+  font-size: 12px;
+  color: var(--text-muted);
+  font-weight: 300;
+  line-height: 1.6;
+  margin-bottom: 14px;
+}
+
+
+/* ------------------------------------------------------------
+   7. PROSE (narrative text columns)
+   Used beside charts to tell the story
+------------------------------------------------------------ */
+.prose {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.prose p {
+  font-size: 14px;
+  color: var(--text-muted);
+  line-height: 1.85;
+  font-weight: 300;
+}
+
+/* Highlighted inline terms */
+.hl {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+
+/* ------------------------------------------------------------
+   8. STAT PILLS (Section 2 — Messi headline numbers)
+------------------------------------------------------------ */
+.stat-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.stat-pill {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 18px 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.pill-num {
+  font-family: var(--font-display);
+  font-size: 42px;
+  color: var(--accent);
+  line-height: 1;
+}
+
+.pill-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-top: 6px;
+}
+
+
+/* ------------------------------------------------------------
+   9. TIMELINE (Section 1)
+   Vertical list of matches with colour-coded dots
+------------------------------------------------------------ */
+.timeline {
+  list-style: none;
+  border-left: 2px solid var(--border);
+  margin-left: 6px;
+  padding-left: 0;
+}
+
+.tl-item {
+  position: relative;
+  padding: 0 0 20px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+/* The coloured dot on the line */
+.tl-item::before {
+  content: '';
+  position: absolute;
+  left: -7px;
+  top: 6px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--bg-card);
+  border: 2px solid var(--border);
+}
+
+.tl-item.win::before  { border-color: var(--green); }
+.tl-item.loss::before { border-color: var(--red); }
+.tl-item.draw::before { border-color: var(--accent2); }
+
+/* Trophy final gets filled gold dot */
+.tl-item.trophy::before {
+  background: var(--accent2);
+  border-color: var(--accent2);
+  width: 14px;
+  height: 14px;
+  left: -8px;
+}
+
+.tl-stage {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+.tl-match {
+  font-family: var(--font-display);
+  font-size: 17px;
+  color: var(--white);
+  letter-spacing: 0.02em;
+}
+
+.tl-score {
+  font-family: var(--font-display);
+  font-size: 15px;
+  letter-spacing: 0.03em;
+}
+
+.tl-item.win  .tl-score { color: var(--green); }
+.tl-item.loss .tl-score { color: var(--red); }
+.tl-item.draw .tl-score,
+.tl-item.trophy .tl-score { color: var(--accent2); }
+
+.tl-note {
+  font-size: 11px;
+  color: var(--text-dim);
+  font-style: italic;
+}
+
+/* Legend row for the timeline key */
+.legend-row {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-bottom: 16px;
+}
+
+.dot {
+  display: inline-block;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  vertical-align: middle;
+  margin-right: 2px;
+}
+.dot.win  { background: var(--green); }
+.dot.loss { background: var(--red); }
+.dot.draw { background: var(--accent2); }
+
+
+/* ------------------------------------------------------------
+   10. FOOTER
+------------------------------------------------------------ */
+.footer {
+  padding: 40px var(--page-pad);
+  border-top: 1px solid var(--border);
+  background: var(--bg-section);
+}
+
+.footer-inner {
+  max-width: 700px;
+}
+
+.footer-title {
+  font-family: var(--font-display);
+  font-size: 20px;
+  color: var(--white);
+  letter-spacing: 0.04em;
+  margin-bottom: 10px;
+}
+
+.footer-meta {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-dim);
+  line-height: 1.9;
+  margin-bottom: 6px;
+}
+
+
+/* ------------------------------------------------------------
+   11. RESPONSIVE — single column on small screens
+------------------------------------------------------------ */
+@media (max-width: 900px) {
+  .two-col,
+  .three-col {
+    grid-template-columns: 1fr;
+  }
+
+  .stat-row {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 540px) {
+  .stat-row {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .hero-stats {
+    gap: 20px;
+  }
+}

@@ -1,0 +1,75 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": "FIFA WORLD CUP QATAR 2022 — PARTICIPATING NATIONS",
+  "width": "container",
+  "height": 500,
+  "data": {
+    "url": "https://raw.githubusercontent.com/FIT3179/Vega-Lite/main/3_choropleth_map/js/ne_110m_admin_0_countries.topojson",
+    "format": {"type": "topojson", "feature": "ne_110m_admin_0_countries"}
+  },
+  "projection": {"type": "equalEarth"},
+  "layer": [
+    {
+      "transform": [
+        {
+          "calculate": "'Did not qualify / Participate'",
+          "as": "status_label"
+        }
+      ],
+      "mark": {"type": "geoshape", "fill": "#1f242e", "stroke": "#111318"},
+      "encoding": {
+        "tooltip": [
+          {"field": "properties.NAME", "type": "nominal", "title": "Country"},
+          {"field": "status_label", "type": "nominal", "title": "Status"}
+        ]
+      }
+    },
+    {
+      "transform": [
+        {
+          "calculate": "datum.properties.NAME === 'United States of America' ? 'UNITED STATES' : datum.properties.NAME === 'United Kingdom' ? 'ENGLAND' : datum.properties.NAME === 'South Korea' ? 'KOREA REPUBLIC' : datum.properties.NAME === 'Qatar' ? 'QATAR' : datum.properties.NAME === 'Ecuador' ? 'ECUADOR' : datum.properties.NAME === 'Senegal' ? 'SENEGAL' : datum.properties.NAME === 'Netherlands' ? 'NETHERLANDS' : datum.properties.NAME === 'Iran' ? 'IRAN' : datum.properties.NAME === 'Wales' ? 'WALES' : datum.properties.NAME === 'Argentina' ? 'ARGENTINA' : datum.properties.NAME === 'Saudi Arabia' ? 'SAUDI ARABIA' : datum.properties.NAME === 'Mexico' ? 'MEXICO' : datum.properties.NAME === 'Poland' ? 'POLAND' : datum.properties.NAME === 'Denmark' ? 'DENMARK' : datum.properties.NAME === 'Tunisia' ? 'TUNISIA' : datum.properties.NAME === 'France' ? 'FRANCE' : datum.properties.NAME === 'Australia' ? 'AUSTRALIA' : datum.properties.NAME === 'Morocco' ? 'MOROCCO' : datum.properties.NAME === 'Croatia' ? 'CROATIA' : datum.properties.NAME === 'Germany' ? 'GERMANY' : datum.properties.NAME === 'Japan' ? 'JAPAN' : datum.properties.NAME === 'Spain' ? 'SPAIN' : datum.properties.NAME === 'Costa Rica' ? 'COSTA RICA' : datum.properties.NAME === 'Belgium' ? 'BELGIUM' : datum.properties.NAME === 'Canada' ? 'CANADA' : datum.properties.NAME === 'Switzerland' ? 'SWITZERLAND' : datum.properties.NAME === 'Cameroon' ? 'CAMEROON' : datum.properties.NAME === 'Brazil' ? 'BRAZIL' : datum.properties.NAME === 'Serbia' ? 'SERBIA' : datum.properties.NAME === 'Portugal' ? 'PORTUGAL' : datum.properties.NAME === 'Ghana' ? 'GHANA' : datum.properties.NAME === 'Uruguay' ? 'URUGUAY' : datum.properties.NAME",
+          "as": "mapped_country"
+        },
+        {
+          "lookup": "mapped_country",
+          "from": {
+            "data": {
+              "url": "js/Fifa_world_cup_matches.csv",
+              "format": {"type": "csv"}
+            },
+            "key": "team1",
+            "fields": ["team1"]
+          }
+        },
+        {
+          "filter": "datum.team1 != null"
+        },
+        {
+          "calculate": "'Tournament Participant'",
+          "as": "status_label"
+        }
+      ],
+      "mark": {"type": "geoshape", "stroke": "#161b22", "strokeWidth": 1},
+      "encoding": {
+        "color": {
+          "field": "status_label",
+          "type": "nominal",
+          "scale": {
+            "domain": ["Tournament Participant"],
+            "range": ["#58a6ff"]
+          },
+          "legend": {
+            "title": "Status",
+            "orient": "bottom-left",
+            "labelColor": "#8b949e",
+            "titleColor": "#e2e6f0"
+          }
+        },
+        "tooltip": [
+          {"field": "properties.NAME", "type": "nominal", "title": "Country"},
+          {"field": "status_label", "type": "nominal", "title": "Status"}
+        ]
+      }
+    }
+  ]
+}

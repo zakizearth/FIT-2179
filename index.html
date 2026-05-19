@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Messi's World Cup 2022</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;600&family=DM+Mono&display=swap" rel="stylesheet" />
+
+  <!-- Vega-Lite -->
+  <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+
+  <!-- Your CSS -->
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+
+<body>
+
+  <!-- =====================================================
+       HERO — Full width title banner
+  ====================================================== -->
+  <header class="hero">
+    <div class="hero-inner">
+      <p class="eyebrow">FIFA World Cup 2022 · Qatar · Data Visualisation</p>
+      <h1 class="hero-title">Lionel Messi &amp; <span>Argentina</span></h1>
+      <p class="hero-sub">How the GOAT finally won the World Cup</p>
+      <p class="hero-lead">
+        After 36 years of waiting, Argentina lifted the World Cup trophy in Qatar on
+        18 December 2022. This visualisation tells the story of how Lionel Messi led
+        his nation from a shock opening defeat to the greatest triumph in Argentine
+        football history — told entirely through data.
+      </p>
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <span class="stat-num">7</span>
+          <span class="stat-label">Goals</span>
+        </div>
+        <div class="hero-stat">
+          <span class="stat-num">3</span>
+          <span class="stat-label">Assists</span>
+        </div>
+        <div class="hero-stat">
+          <span class="stat-num">690</span>
+          <span class="stat-label">Minutes Played</span>
+        </div>
+        <div class="hero-stat">
+          <span class="stat-num">1<sup>st</sup></span>
+          <span class="stat-label">World Cup Title</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+
+  <!-- =====================================================
+       SECTION 1 — WHERE IT HAPPENED
+       Layout: full-width map, then text below
+  ====================================================== -->
+  <section class="section" id="journey">
+
+    <div class="section-label">The Venues</div>
+    <h2 class="section-title">Where Argentina Played</h2>
+
+    <!-- Full-width map chart -->
+    <div class="card card-wide">
+      <div class="card-header">
+        <span class="section-num">01</span>
+        <h2 class="card-title">Global Map of Participants</h2>
+      </div>
+      <div class="card-body">
+        <div id="chart-map"></div>
+      </div>
+    </div>
+
+    <!-- Two-col: text narrative + match timeline -->
+    <div class="two-col" style="margin-top: 32px;">
+
+      <div class="prose">
+        <p>
+          Argentina played all <strong>7 matches</strong> across just <strong>3 stadiums</strong>
+          in Qatar. The <strong class="hl">Lusail Iconic Stadium</strong> was their home ground —
+          hosting 5 of their 7 matches including the group stage comeback against Mexico,
+          the quarter final against the Netherlands, and the unforgettable Final against France.
+        </p>
+        <p>
+          The <strong class="hl">Ahmed bin Ali Stadium</strong> in Al Rayyan hosted the Round of 16
+          clash against Australia, where Messi produced one of the goals of the tournament
+          with a clinical solo finish.
+        </p>
+        <p>
+          <strong class="hl">Stadium 974</strong> — the only fully demountable stadium ever used
+          at a World Cup — hosted the group stage win over Poland that confirmed Argentina's
+          place in the knockout rounds as Group C winners.
+        </p>
+        <p>
+          Hover over the bubbles to see stadium details. Bubble size reflects the number
+          of Argentina matches played at each venue.
+        </p>
+      </div>
+
+      <!-- Match Timeline -->
+      <div>
+        <h3 class="subsection-title">Argentina's Journey Match by Match</h3>
+        <p class="legend-row">
+          <span class="dot win"></span> Win &nbsp;&nbsp;
+          <span class="dot loss"></span> Loss &nbsp;&nbsp;
+          <span class="dot draw"></span> Penalties
+        </p>
+        <ul class="timeline">
+          <li class="tl-item loss">
+            <span class="tl-stage">Group Stage</span>
+            <span class="tl-match">Argentina vs Saudi Arabia</span>
+            <span class="tl-score">1 – 2</span>
+            <span class="tl-note">The shock defeat that woke a nation</span>
+          </li>
+          <li class="tl-item win">
+            <span class="tl-stage">Group Stage</span>
+            <span class="tl-match">Argentina vs Mexico</span>
+            <span class="tl-score">2 – 0</span>
+            <span class="tl-note">Messi's free kick rescues the campaign</span>
+          </li>
+          <li class="tl-item win">
+            <span class="tl-stage">Group Stage</span>
+            <span class="tl-match">Poland vs Argentina</span>
+            <span class="tl-score">0 – 2</span>
+            <span class="tl-note">Top of Group C confirmed</span>
+          </li>
+          <li class="tl-item win">
+            <span class="tl-stage">Round of 16</span>
+            <span class="tl-match">Argentina vs Australia</span>
+            <span class="tl-score">2 – 1</span>
+            <span class="tl-note">Messi's solo goal, one for the ages</span>
+          </li>
+          <li class="tl-item draw">
+            <span class="tl-stage">Quarter Final</span>
+            <span class="tl-match">Netherlands vs Argentina</span>
+            <span class="tl-score">2 – 2 (pen 4–3)</span>
+            <span class="tl-note">Heart-stopping, settled on penalties</span>
+          </li>
+          <li class="tl-item win">
+            <span class="tl-stage">Semi Final</span>
+            <span class="tl-match">Argentina vs Croatia</span>
+            <span class="tl-score">3 – 0</span>
+            <span class="tl-note">Messi's masterclass performance</span>
+          </li>
+          <li class="tl-item draw trophy">
+            <span class="tl-stage">🏆 Final</span>
+            <span class="tl-match">Argentina vs France</span>
+            <span class="tl-score">3 – 3 (pen 4–2)</span>
+            <span class="tl-note">The greatest World Cup final ever played</span>
+          </li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- =====================================================
+       SECTION 2 — MESSI IN NUMBERS
+       Layout: heading + stat pills, then text + chart, then text + chart
+  ====================================================== -->
+  <section class="section section-dark" id="messi">
+
+    <div class="section-label">The Player</div>
+    <h2 class="section-title">Messi in Numbers</h2>
+    <p class="section-intro">
+      Messi's 2022 World Cup campaign was one of the greatest individual performances
+      in football history. He finished as the tournament's joint top scorer, won the
+      Golden Ball, and had a direct hand in <strong>10 of Argentina's 15 goals</strong>.
+    </p>
+
+    <!-- Stat pills row -->
+    <div class="stat-row">
+      <div class="stat-pill">
+        <span class="pill-num">7</span>
+        <span class="pill-label">Goals Scored</span>
+      </div>
+      <div class="stat-pill">
+        <span class="pill-num">3</span>
+        <span class="pill-label">Assists</span>
+      </div>
+      <div class="stat-pill">
+        <span class="pill-num">6.6</span>
+        <span class="pill-label">Expected Goals (xG)</span>
+      </div>
+      <div class="stat-pill">
+        <span class="pill-num">4</span>
+        <span class="pill-label">Penalties Scored</span>
+      </div>
+    </div>
+
+    <!-- Chart 2 + narrative -->
+    <div class="two-col chart-text-row">
+      <div class="card">
+        <h3 class="card-title">Goals &amp; Assists per Match</h3>
+        <p class="card-desc">Messi's direct contributions across all 7 Argentina matches. Blue = goals, gold = assists.</p>
+        <div id="chart-messi-contributions"></div>
+      </div>
+      <div class="prose">
+        <h3 class="subsection-title">Consistent from Start to Finish</h3>
+        <p>
+          Messi contributed in <strong>6 of Argentina's 7 matches</strong>, going scoreless
+          only against Poland — where he still provided an assist. He scored in the group stage,
+          the round of 16, the quarter final, semi final, and the final itself.
+        </p>
+        <p>
+          His most impactful matches were the <strong class="hl">Netherlands quarter final</strong>
+          (2 goals including a penalty) and the <strong class="hl">Final against France</strong>
+          (2 goals — an early penalty and a stunning volley to make it 3–2).
+        </p>
+        <p>
+          No other player in World Cup history has scored in as many stages of a single tournament.
+        </p>
+      </div>
+    </div>
+
+    <!-- Chart 3 + narrative -->
+    <div class="two-col chart-text-row" style="margin-top: 24px;">
+      <div class="prose">
+        <h3 class="subsection-title">Outperforming Expectations</h3>
+        <p>
+          <strong>Expected Goals (xG)</strong> is a statistical measure of shot quality —
+          it estimates how many goals a player "should" score based on where and how they shot.
+          A value greater than xG means the player outperformed expectations.
+        </p>
+        <p>
+          Messi's total xG for the tournament was <strong class="hl">6.6</strong>,
+          yet he scored <strong class="hl">7 goals</strong> — finishing above expectation.
+          The chart shows this match by match: the dashed line is xG, the solid line is actual goals.
+        </p>
+        <p>
+          He was at his most clinical in the knockout rounds, where it mattered most.
+        </p>
+      </div>
+      <div class="card">
+        <h3 class="card-title">Actual Goals vs Expected Goals (xG)</h3>
+        <p class="card-desc">Solid line = actual goals. Dashed line = xG (statistical expectation).</p>
+        <div id="chart-messi-xg"></div>
+      </div>
+    </div>
+
+    <!-- Chart 4: Bubble plot full width -->
+    <div class="card" style="margin-top: 24px;">
+      <div class="two-col" style="align-items:start; gap: 32px;">
+        <div>
+          <h3 class="card-title">Top Scorers — Goals, Assists &amp; xG</h3>
+          <p class="card-desc" style="margin-bottom:0;">
+            The tournament's top 15 scorers compared across goals, assists, and expected goals (bubble size).
+            <strong>Click a team in the legend</strong> to highlight their players.
+            Mbappé led on raw goals (8), but Messi's combination of goals, assists, and xG
+            made him the most complete attacking player in the tournament.
+          </p>
+        </div>
+        <div id="chart-bubble"></div>
+      </div>
+    </div>
+
+  </section>
+
+
+  <!-- =====================================================
+       SECTION 3 — ARGENTINA TEAM STATS
+       Layout: intro text, then 3 charts in a row
+  ====================================================== -->
+  <section class="section" id="team">
+
+    <div class="section-label">The Team</div>
+    <h2 class="section-title">Argentina's Team Performance</h2>
+    <p class="section-intro">
+      Argentina's triumph was not just about Messi. They were the most dominant team
+      in the tournament — maintaining 80%+ passing accuracy in every single match,
+      conceding just 8 goals across 7 games, and scoring 15 in total.
+      The charts below show how their performance evolved across the tournament.
+    </p>
+
+    <div class="three-col">
+
+      <!-- Chart 5 -->
+      <div class="card">
+        <h3 class="card-title">Goals Scored vs Conceded</h3>
+        <p class="card-desc">
+          Argentina scored in every match. Their only loss came in the group stage
+          against Saudi Arabia. By the semi final they were dominant.
+        </p>
+        <div id="chart-goals"></div>
+      </div>
+
+      <!-- Chart 6 -->
+      <div class="card">
+        <h3 class="card-title">Possession &amp; Pass Accuracy</h3>
+        <p class="card-desc">
+          Argentina dominated the ball in 5 of 7 matches. Pass accuracy never
+          dropped below 80%, peaking at 90.8% against Poland.
+        </p>
+        <div id="chart-possession"></div>
+      </div>
+
+      <!-- Chart 7 -->
+      <div class="card">
+        <h3 class="card-title">Total Shots vs Shots on Target</h3>
+        <p class="card-desc">
+          Shot volume was highest against Poland (22 shots) and France (19 shots).
+          Their conversion rate was especially strong in the knockout rounds.
+        </p>
+        <div id="chart-shots"></div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- =====================================================
+       SECTION 4 — TOURNAMENT CONTEXT
+       Layout: text intro, two scatters side by side, full-width bar
+  ====================================================== -->
+  <section class="section section-dark" id="tournament">
+
+    <div class="section-label">The Tournament</div>
+    <h2 class="section-title">How Argentina Compared to All 32 Nations</h2>
+    <p class="section-intro">
+      Argentina did not just survive the tournament — they dominated it statistically.
+      In the group stage they topped Group C with 6 points. Across all 7 matches they
+      outscored their expected goals, kept the most clean sheets in the knockout rounds,
+      and produced the tournament's top scorer in terms of goals plus assists combined.
+    </p>
+
+    <div class="two-col">
+
+      <!-- Chart 8 -->
+      <div class="card">
+        <h3 class="card-title">Group Stage — Points vs Goal Difference</h3>
+        <p class="card-desc">
+          All 32 teams plotted by group stage points and goal difference.
+          Argentina is highlighted. Hover over any point for team details.
+        </p>
+        <div id="chart-groups"></div>
+      </div>
+
+      <!-- Chart 9 -->
+      <div class="card">
+        <h3 class="card-title">All Teams — Expected Goals vs Actual Goals</h3>
+        <p class="card-desc">
+          Teams above the diagonal line outperformed their xG.
+          Argentina scored 15 goals against an xG of 15.2 — near-perfect clinical finishing.
+        </p>
+        <div id="chart-team-xg"></div>
+      </div>
+
+    </div>
+
+    <!-- Chart 10: full width interactive bar -->
+    <div class="card" style="margin-top: 24px;">
+      <div class="two-col" style="align-items:start; gap: 32px;">
+        <div>
+          <h3 class="card-title">Top Scorers — All Nations</h3>
+          <p class="card-desc" style="margin-bottom:0;">
+            Mbappé finished as top scorer with 8 goals, but Messi's
+            <strong class="hl">7 goals + 3 assists = 10 direct contributions</strong>
+            made him the decisive player of the tournament.
+            Two Argentine players — Messi and Julián Álvarez — rank in the
+            top 3. Use the <strong>slider</strong> to filter by minutes played
+            and reveal the most efficient scorers.
+          </p>
+        </div>
+        <div id="chart-top-scorers"></div>
+      </div>
+    </div>
+
+  </section>
+
+
+  <!-- =====================================================
+       FOOTER
+  ====================================================== -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <p class="footer-title">Messi's World Cup 2022 — Argentina's Greatest Triumph</p>
+      <p class="footer-meta">
+        Created by [Your Name] &nbsp;·&nbsp; FIT2179 Data Visualisation 2 &nbsp;·&nbsp;
+        Monash University &nbsp;·&nbsp; 2026
+      </p>
+      <p class="footer-meta">
+        <strong>Data sources:</strong>
+        <a href="https://fbref.com" target="_blank">FBRef.com</a> (player &amp; team statistics) &nbsp;·&nbsp;
+        <a href="https://www.kaggle.com" target="_blank">Kaggle — FIFA World Cup 2022 Dataset</a> (match data)
+        <br />
+        AI tools used for grammar checking and text refinement — acknowledged per Monash University policy.
+      </p>
+    </div>
+  </footer>
+
+  <!-- Your JavaScript -->
+  <script src="js/main.js"></script>
+
+</body>
+</html>

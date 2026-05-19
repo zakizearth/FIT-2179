@@ -1,0 +1,78 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": "container",
+  "height": 260,
+  "data": {
+    "url": "js/argentina_matches.csv",
+    "format": { "type": "csv" }
+  },
+  "transform": [
+    {
+      "fold": ["messi_goals", "messi_assists"],
+      "as": ["type", "value"]
+    },
+    {
+      "calculate": "datum.type === 'messi_goals' ? 'Goals' : 'Assists'",
+      "as": "type_label"
+    },
+    {
+      "calculate": "toNumber(datum.value)",
+      "as": "value_num"
+    },
+    {
+      "calculate": "toNumber(datum.sort_order)",
+      "as": "sort_num"
+    }
+  ],
+  "mark": {
+    "type": "bar",
+    "cornerRadiusTopLeft": 3,
+    "cornerRadiusTopRight": 3
+  },
+  "encoding": {
+    "x": {
+      "field": "opponent",
+      "type": "nominal",
+      "sort": { "field": "sort_num", "op": "min" },
+      "axis": {
+        "title": null,
+        "labelAngle": -30,
+        "labelFontSize": 11
+      }
+    },
+    "xOffset": {
+      "field": "type_label",
+      "type": "nominal",
+      "sort": ["Goals", "Assists"]
+    },
+    "y": {
+      "field": "value_num",
+      "type": "quantitative",
+      "axis": {
+        "title": "Count",
+        "tickMinStep": 1,
+        "grid": true
+      },
+      "scale": { "domain": [0, 3] }
+    },
+    "color": {
+      "field": "type_label",
+      "type": "nominal",
+      "scale": {
+        "domain": ["Goals", "Assists"],
+        "range": ["#58a6ff", "#d4a017"]
+      },
+      "legend": {
+        "title": null,
+        "orient": "top",
+        "direction": "horizontal"
+      }
+    },
+    "tooltip": [
+      { "field": "opponent",   "title": "Opponent" },
+      { "field": "stage",      "title": "Stage" },
+      { "field": "type_label", "title": "Type" },
+      { "field": "value_num",  "title": "Count" }
+    ]
+  }
+}

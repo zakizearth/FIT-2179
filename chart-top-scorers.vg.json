@@ -1,0 +1,127 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": "container",
+  "height": 360,
+  "data": {
+    "url": "js/top_scorers.csv",
+    "format": { "type": "csv" }
+  },
+  "params": [
+    {
+      "name": "min_minutes",
+      "value": 0,
+      "bind": {
+        "input": "range",
+        "min": 0,
+        "max": 600,
+        "step": 50,
+        "name": "Min. Minutes Played: "
+      }
+    }
+  ],
+  "transform": [
+    {
+      "calculate": "toNumber(datum.goals)",
+      "as": "goals_num"
+    },
+    {
+      "calculate": "toNumber(datum.assists)",
+      "as": "assists_num"
+    },
+    {
+      "calculate": "toNumber(datum.xg)",
+      "as": "xg_num"
+    },
+    {
+      "calculate": "toNumber(datum.minutes)",
+      "as": "minutes_num"
+    },
+    {
+      "filter": "datum.minutes_num >= min_minutes"
+    },
+    {
+      "calculate": "datum.goals_num + datum.assists_num",
+      "as": "total"
+    }
+  ],
+  "layer": [
+    {
+      "mark": {
+        "type": "bar",
+        "cornerRadiusTopRight": 3,
+        "cornerRadiusBottomRight": 3
+      },
+      "encoding": {
+        "y": {
+          "field": "player",
+          "type": "nominal",
+          "sort": { "field": "goals_num", "op": "max", "order": "descending" },
+          "axis": { "title": null, "labelFontSize": 11 }
+        },
+        "x": {
+          "field": "goals_num",
+          "type": "quantitative",
+          "axis": {
+            "title": "Goals (blue)  +  Assists (gold)",
+            "tickMinStep": 1
+          }
+        },
+        "color": {
+          "condition": {
+            "test": "datum.player === 'Lionel Messi'",
+            "value": "#58a6ff"
+          },
+          "value": "#1f3a5f"
+        },
+        "tooltip": [
+          { "field": "player",      "title": "Player" },
+          { "field": "team",        "title": "Team" },
+          { "field": "goals_num",   "title": "Goals" },
+          { "field": "assists_num", "title": "Assists" },
+          { "field": "xg_num",      "title": "xG",      "format": ".1f" },
+          { "field": "minutes_num", "title": "Minutes" }
+        ]
+      }
+    },
+    {
+      "mark": {
+        "type": "bar",
+        "cornerRadiusTopRight": 3,
+        "cornerRadiusBottomRight": 3,
+        "opacity": 0.75
+      },
+      "encoding": {
+        "y": {
+          "field": "player",
+          "type": "nominal",
+          "sort": { "field": "goals_num", "op": "max", "order": "descending" }
+        },
+        "x":  { "field": "total",      "type": "quantitative" },
+        "x2": { "value": 0 },
+        "color": { "value": "#d4a017" }
+      }
+    },
+    {
+      "transform": [
+        { "filter": "datum.player === 'Lionel Messi'" }
+      ],
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "dx": 6,
+        "fontSize": 10,
+        "fontWeight": 700
+      },
+      "encoding": {
+        "y": {
+          "field": "player",
+          "type": "nominal",
+          "sort": { "field": "goals_num", "op": "max", "order": "descending" }
+        },
+        "x":    { "field": "goals_num", "type": "quantitative" },
+        "text": { "value": "🐐 Golden Ball Winner" },
+        "color": { "value": "#58a6ff" }
+      }
+    }
+  ]
+}
