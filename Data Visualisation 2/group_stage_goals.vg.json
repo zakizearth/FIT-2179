@@ -1,0 +1,70 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 750,
+  "height": 350,
+  "title": {
+    "text": "Total Goals Scored in Argentina's World Cup Matches",
+    "subtitle": "La Albiceleste's complete 7-match campaign from Group Stage to the Final",
+    "anchor": "start",
+    "fontSize": 16,
+    "subtitleColor": "#718096"
+  },
+  "data": {
+    "url": "data/data.csv"
+  },
+  "transform": [
+    {
+      "filter": "datum.score != null && datum.home_team != null"
+    },
+    {
+      "filter": "datum.home_team == 'Argentina' || datum.away_team == 'Argentina'"
+    },
+    {
+      "calculate": "split(datum.score, '-')",
+      "as": "split_scores"
+    },
+    {
+      "calculate": "toNumber(datum.split_scores[0]) + toNumber(datum.split_scores[1])",
+      "as": "total_goals"
+    },
+    {
+      "calculate": "datum.home_team + ' vs ' + datum.away_team",
+      "as": "matchup"
+    }
+  ],
+  "mark": {
+    "type": "bar",
+    "color": "#43a2ca",
+    "tooltip": true
+  },
+  "encoding": {
+    "x": {
+      "field": "matchup",
+      "type": "nominal",
+      "title": "Matchup",
+      "sort": {
+        "field": "match",
+        "order": "ascending"
+      },
+      "axis": {
+        "labelAngle": -15,
+        "labelFontSize": 11
+      }
+    },
+    "y": {
+      "field": "total_goals",
+      "type": "quantitative",
+      "title": "Total Match Goals",
+      "axis": {
+        "tickMinStep": 1
+      }
+    },
+    "tooltip": [
+      {"field": "match", "type": "quantitative", "title": "Match #"},
+      {"field": "matchup", "type": "nominal", "title": "Match"},
+      {"field": "score", "type": "nominal", "title": "Final Score"},
+      {"field": "total_goals", "type": "quantitative", "title": "Total Goals"},
+      {"field": "venue", "type": "nominal", "title": "Stadium"}
+    ]
+  }
+}

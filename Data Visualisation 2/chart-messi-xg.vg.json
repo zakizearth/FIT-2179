@@ -1,0 +1,87 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": "container",
+  "height": 260,
+  "data": {
+    "url": "js/argentina_matches.csv",
+    "format": { "type": "csv" }
+  },
+  "transform": [
+    { "calculate": "toNumber(datum.sort_order)",  "as": "sort_num" },
+    { "calculate": "toNumber(datum.messi_goals)", "as": "goals_num" },
+    { "calculate": "toNumber(datum.messi_xg)",    "as": "xg_num" }
+  ],
+  "encoding": {
+    "x": {
+      "field": "opponent",
+      "type": "ordinal",
+      "sort": { "field": "sort_num", "op": "min" },
+      "axis": {
+        "title": null,
+        "labelAngle": -30,
+        "labelFontSize": 11
+      }
+    }
+  },
+  "layer": [
+    {
+      "mark": {
+        "type": "line",
+        "strokeDash": [5, 4],
+        "strokeWidth": 2,
+        "color": "#8b949e"
+      },
+      "encoding": {
+        "y": {
+          "field": "xg_num",
+          "type": "quantitative",
+          "axis": { "title": "Value", "tickMinStep": 0.5, "grid": true },
+          "scale": { "domain": [0, 2.5] }
+        }
+      }
+    },
+    {
+      "mark": { "type": "point", "filled": true, "size": 70, "color": "#8b949e" },
+      "encoding": {
+        "y": { "field": "xg_num", "type": "quantitative" },
+        "tooltip": [
+          { "field": "opponent", "title": "Opponent" },
+          { "field": "stage",    "title": "Stage" },
+          { "field": "xg_num",   "title": "xG (Expected Goals)", "format": ".2f" }
+        ]
+      }
+    },
+    {
+      "mark": { "type": "line", "strokeWidth": 2.5, "color": "#58a6ff" },
+      "encoding": {
+        "y": { "field": "goals_num", "type": "quantitative" }
+      }
+    },
+    {
+      "mark": { "type": "point", "filled": true, "size": 90, "color": "#58a6ff" },
+      "encoding": {
+        "y": { "field": "goals_num", "type": "quantitative" },
+        "tooltip": [
+          { "field": "opponent",  "title": "Opponent" },
+          { "field": "stage",     "title": "Stage" },
+          { "field": "goals_num", "title": "Actual Goals" },
+          { "field": "xg_num",    "title": "xG (Expected)", "format": ".2f" }
+        ]
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "dy": -14,
+        "fontSize": 10,
+        "fontWeight": 600,
+        "color": "#58a6ff"
+      },
+      "encoding": {
+        "y":    { "field": "goals_num", "type": "quantitative" },
+        "text": { "field": "goals_num", "type": "quantitative" }
+      }
+    }
+  ],
+  "resolve": { "scale": { "y": "shared" } }
+}
